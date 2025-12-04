@@ -14,10 +14,14 @@ conntectToDb();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "https://ride-booking-web-cilent.vercel.app/",
+      "https://ride-booking-web-client.onrender.com",
+    ],
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
