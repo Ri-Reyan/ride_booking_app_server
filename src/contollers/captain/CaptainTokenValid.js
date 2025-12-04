@@ -1,35 +1,31 @@
+// controllers/CaptainTokenValid.controller.js
 import jwt from "jsonwebtoken";
 import Captain from "../../models/captain/Captain.model.js";
 
 const CaptainTokenValid = async (req, res) => {
-  const token = req.cookies.token;
+  const token = req.cookies.token; // JWT from cookie
 
   try {
     if (!token) {
-      return res.status(401).json({
-        message: "Unauthorized",
-      });
+      return res.status(401).json({ success: false, message: "Unauthorized" });
     }
 
-    const decode = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    if (!decode) {
-      return res.status(400).json({
-        message: "Invalid token",
-      });
-    }
-
-    const captain = await Captain.findById(decode.id);
+    const captain = await Captain.findById(decoded.id).select("-password"); // Exclude password
 
     if (!captain) {
-      return res.status(401).json({
-        message: "Captain not found",
-      });
+      return res
+        .status(404)
+        .json({ success: false, message: "Captain not found" });
     }
 
-    return res.status(200).json({ token });
+    return res.status(200).json({
+      success: true,
+      captain, // Only non-sensitive data
+    });
   } catch (err) {
-    message: err.message;
+    return res.status(500).json({ success: false, message: err.message });
   }
 };
 
