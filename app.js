@@ -15,7 +15,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      "https://ride-booking-web-cilent.vercel.app/",
+      "https://ride-booking-web-cilent.vercel.app",
       "https://ride-booking-web-client.onrender.com",
     ],
     credentials: true,
