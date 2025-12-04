@@ -10,8 +10,8 @@ const CaptainLogout = async (req, res) => {
 
   res.clearCookie("token", {
     httpOnly: true,
-    secure: false, // enable in production
-    sameSite: "strict",
+    secure: true, // enable in production
+    sameSite: "none",
   });
 
   await BlackListModelCaptain.create({ token });

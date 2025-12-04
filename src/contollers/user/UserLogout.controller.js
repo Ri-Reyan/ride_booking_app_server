@@ -14,8 +14,8 @@ const UserLogout = async (req, res) => {
   // Clear session token cookie
   res.clearCookie("token", {
     httpOnly: true,
-    secure: false, // enable in production
-    sameSite: "strict",
+    secure: true, // enable in production
+    sameSite: "none",
   });
 
   // Insert token into blacklist for downstream authorization invalidation
